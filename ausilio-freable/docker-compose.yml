@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app_proxy:
     environment:
-      APP_HOST: nginx_1
+      APP_HOST: ausilio-freable_nginx_1
       APP_PORT: 8080
       PROXY_AUTH_ADD: "false"
 
@@ -16,21 +16,21 @@ services:
     depends_on:
       - app
       - ai-engine
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: airtablesync/nocodb:2026.06.1
+    image: airtablesync/nocodb:2026.06.0
     restart: on-failure
     user: "1000:1000"
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      NC_DB: "pg://postgres_1:5432?u=nocodb&p=${DB_PASSWORD:-itworkslocally}&d=nocodb"
+      NC_DB: "pg://postgres:5432?u=nocodb&p=${DB_PASSWORD:-itworkslocally}&d=nocodb"
       NC_PUBLIC_URL: "${APP_URL:-http://localhost:2184}"
       NC_AUTH_JWT_SECRET: "${JWT_SECRET:-airtablesync-jwt-secret-change-me}"
     volumes:
@@ -52,7 +52,7 @@ services:
       - ${APP_DATA_DIR}/data/ai-engine:/data
 
   postgres:
-    image: postgres:18.3-alpine@sha256:52098013b4b64a746626437d38afc03cabff6cdeb4d3d92e2342aa95f0ce56ea
+    image: postgres:17-alpine
     restart: on-failure
     stop_grace_period: 1m
     environment:

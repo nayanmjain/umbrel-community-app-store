@@ -1,4 +1,4 @@
-FROM nocodb/nocodb:2026.06.1
+FROM nocodb/nocodb:2026.06.0
 
 USER root
 
