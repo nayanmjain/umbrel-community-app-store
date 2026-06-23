@@ -1,7 +1,7 @@
 FROM node:20-slim AS builder
 
 WORKDIR /build
-COPY ai-engine/package.json ai-engine/tsconfig.json ./
+COPY ai-engine/package.json ai-engine/package-lock.json ai-engine/tsconfig.json ./
 COPY ai-engine/src/ ./src/
 RUN npm ci && npm run build
 
