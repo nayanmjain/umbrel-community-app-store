@@ -1,0 +1,56 @@
+manifestVersion: 1
+id: airtablesync
+category: files
+name: AirtableSync
+version: "1.0.0"
+tagline: Self-hosted Airtable clone with AI-powered automation
+description: >-
+  AirtableSync is a powerful, self-hosted Airtable alternative built on NocoDB with native AI LLM provider integration.
+
+
+  Features:
+
+  📊 Smart Spreadsheet Interface: Rich spreadsheet UI with Sort, Filter, Hide, Group, and specialized column types (Attachment, Rating, Formula, Link, Lookup, Rollup, and more).
+
+
+  🤖 AI-Powered Features: Connect any OpenAI-compatible LLM provider (OpenAI, OpenCode, Anthropic Claude, Ollama, vLLM) for Smart Fill, Formula Generation, Auto-Classification, and Natural Language Querying.
+
+
+  🏞️ Multiple Views: Grid, Kanban, Gallery, Calendar, and Form views to visualize your data any way you need.
+
+
+  🔌 REST API & MCP Server: Auto-generated REST APIs for every table. Built-in MCP Server lets AI agents (Claude, OpenCode) securely interact with your database.
+
+
+  🔄 Automations & Webhooks: Trigger workflows and integrate with Slack, Discord, Email, and more.
+
+
+  🛡️ Fine-Grained Permissions: Role-based access control at base, table, and row levels.
+
+
+  🗄️ PostgreSQL-Powered: Built on robust PostgreSQL for reliability and performance at any scale.
+releaseNotes: >-
+  Initial release of AirtableSync featuring:
+    - Full NocoDB base with Grid, Kanban, Gallery, Calendar, and Form views
+    - AI Engine with OpenAI-compatible provider support (OpenAI, OpenCode, Anthropic Claude, Ollama, vLLM)
+    - Smart Fill: AI-powered cell content generation
+    - Formula Generator: Natural language to spreadsheet formulas
+    - Auto-Classification: AI-driven data categorization
+    - Natural Language Query: Query your data in plain English
+    - MCP Server support for AI agent integration
+    - Umbrel one-click install
+developer: AirtableSync
+website: https://github.com/nocodb/nocodb
+dependencies: []
+repo: https://github.com/nocodb/nocodb
+support: https://github.com/nocodb/nocodb/issues
+port: 2184
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: airtablesync
+submission: ""

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AirtableSync AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>AirtableSync AI</h1>
+      <nav>
+        <button class="nav-btn active" data-tab="providers">Providers</button>
+        <button class="nav-btn" data-tab="smart-fill">Smart Fill</button>
+        <button class="nav-btn" data-tab="formula">Formula</button>
+        <button class="nav-btn" data-tab="classify">Classify</button>
+        <button class="nav-btn" data-tab="nlp-query">NL Query</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="tab-providers" class="tab-content active">
+        <h2>AI Providers</h2>
+        <p class="subtitle">Connect your LLM providers (OpenAI, OpenCode, Anthropic Claude, Ollama, vLLM, etc.)</p>
+        <div id="providers-list"></div>
+        <button class="btn btn-primary" onclick="showAddProvider()">+ Add Provider</button>
+      </section>
+
+      <section id="tab-smart-fill" class="tab-content">
+        <h2>Smart Fill</h2>
+        <p class="subtitle">Describe what you want and let AI fill the cells</p>
+        <div class="feature-form">
+          <div class="form-group">
+            <label>Provider</label>
+            <select id="sf-provider"></select>
+          </div>
+          <div class="form-group">
+            <label>Describe the values to generate</label>
+            <textarea id="sf-description" rows="3" placeholder="e.g., Generate realistic email addresses for a marketing team"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Number of values</label>
+            <input type="number" id="sf-count" value="5" min="1" max="50" />
+          </div>
+          <button class="btn btn-primary" onclick="executeSmartFill()">Generate</button>
+          <div id="sf-result" class="result-area"></div>
+        </div>
+      </section>
+
+      <section id="tab-formula" class="tab-content">
+        <h2>Formula Generator</h2>
+        <p class="subtitle">Describe a calculation in plain English, get a NocoDB formula</p>
+        <div class="feature-form">
+          <div class="form-group">
+            <label>Provider</label>
+            <select id="fm-provider"></select>
+          </div>
+          <div class="form-group">
+            <label>Available Columns (comma separated)</label>
+            <input type="text" id="fm-columns" placeholder="Revenue, Cost, Quantity, Price" />
+          </div>
+          <div class="form-group">
+            <label>Describe the formula you need</label>
+            <textarea id="fm-description" rows="3" placeholder="e.g., Calculate profit margin as a percentage of revenue"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="executeFormula()">Generate Formula</button>
+          <div id="fm-result" class="result-area"></div>
+        </div>
+      </section>
+
+      <section id="tab-classify" class="tab-content">
+        <h2>Auto-Classification</h2>
+        <p class="subtitle">Automatically categorize values into groups</p>
+        <div class="feature-form">
+          <div class="form-group">
+            <label>Provider</label>
+            <select id="cl-provider"></select>
+          </div>
+          <div class="form-group">
+            <label>Column Name</label>
+            <input type="text" id="cl-column" placeholder="e.g., Product Name" />
+          </div>
+          <div class="form-group">
+            <label>Values to classify (one per line)</label>
+            <textarea id="cl-values" rows="5" placeholder="Apple&#10;Banana&#10;Carrot&#10;Chicken"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Existing categories (optional, comma separated)</label>
+            <input type="text" id="cl-categories" placeholder="Fruits, Vegetables, Meat" />
+          </div>
+          <button class="btn btn-primary" onclick="executeClassify()">Classify</button>
+          <div id="cl-result" class="result-area"></div>
+        </div>
+      </section>
+
+      <section id="tab-nlp-query" class="tab-content">
+        <h2>Natural Language Query</h2>
+        <p class="subtitle">Ask questions about your data in plain English</p>
+        <div class="feature-form">
+          <div class="form-group">
+            <label>Provider</label>
+            <select id="nlp-provider"></select>
+          </div>
+          <div class="form-group">
+            <label>Table Name</label>
+            <input type="text" id="nlp-table" placeholder="e.g., Orders" />
+          </div>
+          <div class="form-group">
+            <label>Available Columns</label>
+            <input type="text" id="nlp-columns" placeholder="name: text, amount: number, date: date" />
+          </div>
+          <div class="form-group">
+            <label>Ask a question about your data</label>
+            <textarea id="nlp-query" rows="3" placeholder="e.g., Show me all orders over $100 from last month sorted by amount descending"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="executeNLPQuery()">Analyze</button>
+          <div id="nlp-result" class="result-area"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="provider-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Add AI Provider</h2>
+      <div class="form-group">
+        <label>Provider Type</label>
+        <select id="pm-type">
+          <option value="openai-compatible">OpenAI Compatible (OpenAI, OpenCode, Ollama, vLLM)</option>
+          <option value="anthropic">Anthropic Claude</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="pm-name" placeholder="My OpenAI Provider" />
+      </div>
+      <div class="form-group">
+        <label>API Base URL</label>
+        <input type="text" id="pm-base-url" placeholder="https://api.openai.com/v1" />
+      </div>
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="password" id="pm-api-key" placeholder="sk-..." />
+      </div>
+      <div class="form-group">
+        <label>Default Model</label>
+        <input type="text" id="pm-model" placeholder="gpt-4o" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="testProvider()">Test Connection</button>
+        <button class="btn btn-primary" onclick="saveProvider()">Save</button>
+      </div>
+      <div id="pm-result" class="result-area"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

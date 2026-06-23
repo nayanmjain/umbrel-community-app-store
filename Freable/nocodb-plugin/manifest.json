@@ -1,0 +1,10 @@
+{
+  "name": "AirtableSync AI",
+  "version": "1.0.0",
+  "description": "AI-powered features: Smart Fill, Formula Generator, Auto-Classification, Natural Language Query",
+  "icon": "robot",
+  "tags": ["ai", "automation", "smart-fill", "formula"],
+  "permissions": ["read", "write"],
+  "author": "AirtableSync",
+  "website": "https://github.com/nocodb/nocodb"
+}
