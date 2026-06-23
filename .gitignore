@@ -1,1 +1,11 @@
 .DS_Store
+node_modules/
+dist/
+.env
+*.log
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+data/
+.DS_Store?
