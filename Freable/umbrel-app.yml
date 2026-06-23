@@ -1,11 +1,11 @@
 manifestVersion: 1
-id: airtablesync
+id: freable
 category: files
-name: AirtableSync
+name: Freable
 version: "1.0.0"
 tagline: Self-hosted Airtable clone with AI-powered automation
 description: >-
-  AirtableSync is a powerful, self-hosted Airtable alternative built on NocoDB with native AI LLM provider integration.
+  Freable is a powerful, self-hosted Airtable alternative built on NocoDB with native AI LLM provider integration.
 
 
   Features:
